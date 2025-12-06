@@ -1,238 +1,190 @@
-import java.util.ArrayList;
+
+
 import java.util.Scanner;
 
-// Class untuk model Task
-class Task {
-    private int id;
-    private String nama;
-    private boolean selesai;
-    
-    public Task(int id, String nama) {
-        this.id = id;
-        this.nama = nama;
-        this.selesai = false;
-    }
-    
-    // Getter dan Setter
-    public int getId() {
-        return id;
-    }
-    
-    public String getNama() {
-        return nama;
-    }
-    
-    public void setNama(String nama) {
-        this.nama = nama;
-    }
-    
-    public boolean isSelesai() {
-        return selesai;
-    }
-    
-    public void setSelesai(boolean selesai) {
-        this.selesai = selesai;
-    }
-    
-    @Override
-    public String toString() {
-        String status = selesai ? "[✓]" : "[ ]";
-        return status + " " + id + ". " + nama;
-    }
-}
-
-// Class untuk manage semua operasi TodoList
-class TodoListManager {
-    private ArrayList<Task> taskList;
-    private int nextId;
-    
-    public TodoListManager() {
-        this.taskList = new ArrayList<>();
-        this.nextId = 1;
-    }
-    
-    // Method untuk tambah task
-    public void tambahTask(String nama) {
-        Task taskBaru = new Task(nextId, nama);
-        taskList.add(taskBaru);
-        System.out.println("✓ Task berhasil ditambahkan!");
-        nextId++;
-    }
-    
-    // Method untuk lihat semua task
-    public void lihatSemuaTask() {
-        if (taskList.isEmpty()) {
-            System.out.println("Belum ada task dalam list.");
-            return;
-        }
-        
-        System.out.println("\n=== DAFTAR TASK ===");
-        for (Task task : taskList) {
-            System.out.println(task);
-        }
-    }
-    
-    // Method untuk update task
-    public void updateTask(int id, String namaBaru) {
-        Task task = cariTaskById(id);
-        if (task != null) {
-            task.setNama(namaBaru);
-            System.out.println("✓ Task berhasil diupdate!");
-        } else {
-            System.out.println("✗ Task dengan ID " + id + " tidak ditemukan!");
-        }
-    }
-    
-    // Method untuk toggle status task (selesai/belum)
-    public void toggleStatusTask(int id) {
-        Task task = cariTaskById(id);
-        if (task != null) {
-            task.setSelesai(!task.isSelesai());
-            String status = task.isSelesai() ? "Selesai" : "Belum Selesai";
-            System.out.println("✓ Status task diubah menjadi: " + status);
-        } else {
-            System.out.println("✗ Task dengan ID " + id + " tidak ditemukan!");
-        }
-    }
-    
-    // Method untuk hapus task
-    public void hapusTask(int id) {
-        Task task = cariTaskById(id);
-        if (task != null) {
-            taskList.remove(task);
-            System.out.println("✓ Task berhasil dihapus!");
-        } else {
-            System.out.println("✗ Task dengan ID " + id + " tidak ditemukan!");
-        }
-    }
-    
-    // Helper method untuk cari task berdasarkan ID
-    private Task cariTaskById(int id) {
-        for (Task task : taskList) {
-            if (task.getId() == id) {
-                return task;
-            }
-        }
-        return null;
-    }
-}
-
-// Class Main untuk menjalankan aplikasi
+/**
+ * Class Main untuk menjalankan aplikasi TodoList
+ * 
+ * PEMBAGIAN TUGAS:
+ * - Main method & Menu: Person 3
+ * - menuTambahTask: Person 4
+ * - menuUpdateTask & menuHapusTask: Person 5
+ */
 public class Main {
+    // ========================================
+    // ATTRIBUTES (Static)
+    // ========================================
     private static Scanner scanner = new Scanner(System.in);
     private static TodoListManager manager = new TodoListManager();
     
+    
+    // ========================================
+    // SECTION 1: MAIN METHOD & CONTROL FLOW
+    // Dikerjakan oleh: Person 3
+    // ========================================
+    
+    /**
+     * Main method - Entry point aplikasi
+     * 
+     * Algoritma:
+     * 1. Buat variabel boolean running = true
+     * 2. Loop selama running == true:
+     *    a. Tampilkan menu (panggil tampilkanMenu())
+     *    b. Input pilihan user (panggil inputPilihan())
+     *    c. Switch case berdasarkan pilihan:
+     *       - case 1: panggil menuTambahTask()
+     *       - case 2: panggil manager.lihatSemuaTask()
+     *       - case 3: panggil menuUpdateTask()
+     *       - case 4: panggil menuHapusTask()
+     *       - case 5: set running = false, print "Terima kasih!"
+     *       - default: print "Pilihan tidak valid!"
+     *    d. Jika masih running, print "Tekan Enter..." dan tunggu input
+     * 3. Close scanner
+     */
     public static void main(String[] args) {
-        boolean running = true;
+        // TODO Person 3: Buat variabel boolean running
         
-        while (running) {
-            tampilkanMenu();
-            int pilihan = inputPilihan();
-            
-            switch (pilihan) {
-                case 1:
-                    menuTambahTask();
-                    break;
-                case 2:
-                    manager.lihatSemuaTask();
-                    break;
-                case 3:
-                    menuUpdateTask();
-                    break;
-                case 4:
-                    menuHapusTask();
-                    break;
-                case 5:
-                    running = false;
-                    System.out.println("Terima kasih! Aplikasi ditutup.");
-                    break;
-                default:
-                    System.out.println("Pilihan tidak valid!");
-            }
-            
-            if (running) {
-                System.out.println("\nTekan Enter untuk melanjutkan...");
-                scanner.nextLine();
-            }
-        }
+        // TODO Person 3: Buat while loop
         
-        scanner.close();
+            // TODO Person 3: Panggil tampilkanMenu()
+            
+            // TODO Person 3: Panggil inputPilihan() dan simpan di variabel
+            
+            // TODO Person 3: Buat switch statement dengan 5 case
+            
+            
+            // TODO Person 3: Jika masih running, tunggu Enter
+        
+        
+        // TODO Person 3: Close scanner
     }
     
-    // Method untuk tampilkan menu utama
+    
+    // ========================================
+    // SECTION 2: MENU & INPUT UTILITIES
+    // Dikerjakan oleh: Person 3
+    // ========================================
+    
+    /**
+     * Method untuk menampilkan menu utama
+     * 
+     * Tampilan:
+     * ╔════════════════════════════════╗
+     * ║     APLIKASI TODO LIST         ║
+     * ╚════════════════════════════════╝
+     * 1. Tambah Task
+     * 2. Lihat Semua Task
+     * 3. Update/Edit Task
+     * 4. Hapus Task
+     * 5. Keluar
+     * 
+     * Pilih menu (1-5):
+     */
     private static void tampilkanMenu() {
-        System.out.println("\n╔════════════════════════════════╗");
-        System.out.println("║     APLIKASI TODO LIST         ║");
-        System.out.println("╚════════════════════════════════╝");
-        System.out.println("1. Tambah Task");
-        System.out.println("2. Lihat Semua Task");
-        System.out.println("3. Update/Edit Task");
-        System.out.println("4. Hapus Task");
-        System.out.println("5. Keluar");
-        System.out.print("\nPilih menu (1-5): ");
+        // TODO Person 3: Print semua menu dengan format di atas
     }
     
-    // Method untuk input pilihan menu
+    /**
+     * Method untuk input pilihan dari user
+     * @return int pilihan menu (1-5), atau -1 jika input invalid
+     * 
+     * Algoritma:
+     * 1. Gunakan try-catch
+     * 2. Di dalam try:
+     *    - Baca integer dari scanner
+     *    - Consume newline dengan scanner.nextLine()
+     *    - Return integer
+     * 3. Di catch:
+     *    - Clear buffer dengan scanner.nextLine()
+     *    - Return -1 (tanda input invalid)
+     */
     private static int inputPilihan() {
-        try {
-            int pilihan = scanner.nextInt();
-            scanner.nextLine(); // consume newline
-            return pilihan;
-        } catch (Exception e) {
-            scanner.nextLine(); // clear buffer
-            return -1;
-        }
+        // TODO Person 3: Implementasi dengan try-catch
+        return -1; // temporary
     }
     
-    // Method menu tambah task
+    
+    // ========================================
+    // SECTION 3: FEATURE - ADD TASK
+    // Dikerjakan oleh: Person 4
+    // ========================================
+    
+    /**
+     * Method untuk menu tambah task
+     * 
+     * Algoritma:
+     * 1. Print "Masukkan nama task: "
+     * 2. Baca input nama dari scanner (gunakan nextLine())
+     * 3. Cek apakah nama tidak kosong (gunakan .trim().isEmpty())
+     * 4. Jika tidak kosong:
+     *    - Panggil manager.tambahTask(nama)
+     * 5. Jika kosong:
+     *    - Print "✗ Nama task tidak boleh kosong!"
+     */
     private static void menuTambahTask() {
-        System.out.print("\nMasukkan nama task: ");
-        String nama = scanner.nextLine();
-        
-        if (!nama.trim().isEmpty()) {
-            manager.tambahTask(nama);
-        } else {
-            System.out.println("✗ Nama task tidak boleh kosong!");
-        }
+        // TODO Person 4: Print prompt
+        // TODO Person 4: Baca input nama
+        // TODO Person 4: Validasi tidak kosong
+        // TODO Person 4: Panggil manager.tambahTask() atau print error
     }
     
-    // Method menu update task
+    
+    // ========================================
+    // SECTION 4: FEATURE - UPDATE TASK
+    // Dikerjakan oleh: Person 5
+    // ========================================
+    
+    /**
+     * Method untuk menu update task
+     * 
+     * Algoritma:
+     * 1. Tampilkan daftar task (panggil manager.lihatSemuaTask())
+     * 2. Print pilihan aksi:
+     *    - 1. Edit nama task
+     *    - 2. Toggle status (Selesai/Belum)
+     * 3. Input pilihan aksi
+     * 4. Input ID task
+     * 5. Switch berdasarkan aksi:
+     *    - Jika aksi == 1:
+     *      a. Input nama baru
+     *      b. Panggil manager.updateTask(id, namaBaru)
+     *    - Jika aksi == 2:
+     *      a. Panggil manager.toggleStatusTask(id)
+     *    - Else:
+     *      a. Print "✗ Pilihan tidak valid!"
+     */
     private static void menuUpdateTask() {
-        manager.lihatSemuaTask();
-        
-        System.out.println("\n1. Edit nama task");
-        System.out.println("2. Toggle status (Selesai/Belum)");
-        System.out.print("Pilih aksi: ");
-        
-        int aksi = inputPilihan();
-        System.out.print("Masukkan ID task: ");
-        int id = inputPilihan();
-        
-        if (aksi == 1) {
-            System.out.print("Masukkan nama baru: ");
-            String namaBaru = scanner.nextLine();
-            manager.updateTask(id, namaBaru);
-        } else if (aksi == 2) {
-            manager.toggleStatusTask(id);
-        } else {
-            System.out.println("✗ Pilihan tidak valid!");
-        }
+        // TODO Person 5: Tampilkan daftar task
+        // TODO Person 5: Print menu pilihan aksi
+        // TODO Person 5: Input aksi dan id
+        // TODO Person 5: Buat if-else untuk handle aksi
     }
     
-    // Method menu hapus task
+    
+    // ========================================
+    // SECTION 5: FEATURE - DELETE TASK
+    // Dikerjakan oleh: Person 5
+    // ========================================
+    
+    /**
+     * Method untuk menu hapus task
+     * 
+     * Algoritma:
+     * 1. Tampilkan daftar task (panggil manager.lihatSemuaTask())
+     * 2. Print "Masukkan ID task yang akan dihapus: "
+     * 3. Input ID task
+     * 4. Print "Yakin ingin menghapus? (y/n): "
+     * 5. Input konfirmasi
+     * 6. Jika konfirmasi == "y" (case insensitive):
+     *    - Panggil manager.hapusTask(id)
+     * 7. Else:
+     *    - Print "Penghapusan dibatalkan."
+     */
     private static void menuHapusTask() {
-        manager.lihatSemuaTask();
-        
-        System.out.print("\nMasukkan ID task yang akan dihapus: ");
-        int id = inputPilihan();
-        
-        System.out.print("Yakin ingin menghapus? (y/n): ");
-        String konfirmasi = scanner.nextLine();
-        
-        if (konfirmasi.equalsIgnoreCase("y")) {
-            manager.hapusTask(id);
-        } else {
-            System.out.println("Penghapusan dibatalkan.");
-        }
+        // TODO Person 5: Tampilkan daftar task
+        // TODO Person 5: Input ID
+        // TODO Person 5: Minta konfirmasi
+        // TODO Person 5: Cek konfirmasi (gunakan .equalsIgnoreCase("y"))
+        // TODO Person 5: Panggil hapusTask atau print pembatalan
     }
 }
