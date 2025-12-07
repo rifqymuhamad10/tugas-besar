@@ -225,7 +225,7 @@ public class Main {
         }
         
         // Konfirmasi keamanan
-        System.out.print("⚠️ Apakah Anda yakin ingin menghapus task ID " + id + "? (y/n): ");
+        System.out.print("Apakah Anda yakin ingin menghapus task ID " + id + "? (y/n): ");
         String konfirmasi = scanner.nextLine();
         
         if (konfirmasi.equalsIgnoreCase("y")) {
