@@ -5,7 +5,7 @@ import java.util.Scanner;
  * 
  * PEMBAGIAN TUGAS:
  * - Main method & Menu: Person 3
- * - menuTambahTask: Person 4
+ * - menuTambahTask: Person 4 ⭐ (IMPROVED VERSION)
  * - menuUpdateTask & menuHapusTask: Person 5
  */
 public class Main {
@@ -128,11 +128,12 @@ public class Main {
     
     // ========================================
     // SECTION 3: FEATURE - ADD TASK
-    // Dikerjakan oleh: Person 4
+    // Dikerjakan oleh: Person 4 ⭐ IMPROVED
     // ========================================
     
     /**
      * Method untuk menu tambah task
+     * IMPROVEMENT: Validasi lebih ketat & konfirmasi tambah multiple tasks
      * 
      * Algoritma:
      * 1. Print "Masukkan nama task: "
@@ -140,17 +141,42 @@ public class Main {
      * 3. Cek apakah nama tidak kosong (gunakan .trim().isEmpty())
      * 4. Jika tidak kosong:
      *    - Panggil manager.tambahTask(nama)
+     *    - Tanya user apakah mau tambah task lagi
      * 5. Jika kosong:
      *    - Print "✗ Nama task tidak boleh kosong!"
      */
     private static void menuTambahTask() {
-        System.out.print("\nMasukkan nama task: ");
-        String nama = scanner.nextLine();
+        boolean tambahLagi = true;
         
-        if (!nama.trim().isEmpty()) {
-            manager.tambahTask(nama);
-        } else {
-            System.out.println("✗ Nama task tidak boleh kosong!");
+        while (tambahLagi) {
+            System.out.println("\n--- TAMBAH TASK BARU ---");
+            System.out.print("Masukkan nama task: ");
+            String nama = scanner.nextLine();
+            
+            // Validasi input tidak kosong
+            if (!nama.trim().isEmpty()) {
+                manager.tambahTask(nama);
+                
+                // Tanya apakah ingin menambah task lagi
+                System.out.print("\nTambah task lagi? (y/n): ");
+                String jawaban = scanner.nextLine();
+                
+                if (!jawaban.equalsIgnoreCase("y")) {
+                    tambahLagi = false;
+                    System.out.println("✓ Selesai menambah task!");
+                }
+            } else {
+                System.out.println("✗ Nama task tidak boleh kosong!");
+                System.out.println("💡 Tip: Masukkan nama task yang jelas dan deskriptif");
+                
+                // Tetap tanya apakah mau coba lagi
+                System.out.print("\nCoba lagi? (y/n): ");
+                String jawaban = scanner.nextLine();
+                
+                if (!jawaban.equalsIgnoreCase("y")) {
+                    tambahLagi = false;
+                }
+            }
         }
     }
     
