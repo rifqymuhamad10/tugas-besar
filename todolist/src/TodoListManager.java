@@ -23,8 +23,8 @@ public class TodoListManager {
      * Set nextId = 1 sebagai ID awal
      */
     public TodoListManager() {
-        // TODO Person 2A: Initialize taskList
-        // TODO Person 2A: Set nextId = 1
+        taskList = new ArrayList<>();
+        nextId = 1;
     }
     
     
@@ -44,10 +44,10 @@ public class TodoListManager {
      * 4. Increment nextId untuk task berikutnya
      */
     public void tambahTask(String nama) {
-        // TODO Person 2B: Buat object Task baru
-        // TODO Person 2B: Tambahkan ke taskList
-        // TODO Person 2B: Print pesan "✓ Task berhasil ditambahkan!"
-        // TODO Person 2B: nextId++
+        Task taskBaru = new Task(nextId, nama);
+        taskList.add(taskBaru);
+        System.out.println("✓ Task berhasil ditambahkan: " + nama);
+        nextId++;
     }
     
     /**
@@ -62,10 +62,15 @@ public class TodoListManager {
      *    - Print setiap task (otomatis panggil toString())
      */
     public void lihatSemuaTask() {
-        // TODO Person 2B: Cek if taskList.isEmpty()
-        // TODO Person 2B: Jika kosong, print pesan dan return
-        // TODO Person 2B: Print header
-        // TODO Person 2B: Loop dan print semua task
+        if (taskList.isEmpty()) {
+            System.out.println("Belum ada task dalam list!");
+            return;
+        }
+        
+        System.out.println("=== DAFTAR TASK ===");
+        for (Task t : taskList) {
+            System.out.println(t.toString());
+        }
     }
     
     
@@ -88,10 +93,13 @@ public class TodoListManager {
      *    - Print pesan error
      */
     public void updateTask(int id, String namaBaru) {
-        // TODO Person 2C: Panggil cariTaskById(id)
-        // TODO Person 2C: Cek if task != null
-        // TODO Person 2C: Set nama baru dan print sukses
-        // TODO Person 2C: Else print error
+        Task t = cariTaskById(id);
+        if (t != null) {
+            t.setNama(namaBaru);
+            System.out.println("✓ Task berhasil diupdate!");
+        } else {
+            System.out.println("✗ Task dengan ID tersebut tidak ditemukan.");
+        }
     }
     
     /**
@@ -108,11 +116,14 @@ public class TodoListManager {
      *    - Print pesan error
      */
     public void toggleStatusTask(int id) {
-        // TODO Person 2C: Panggil cariTaskById(id)
-        // TODO Person 2C: Cek if task != null
-        // TODO Person 2C: Toggle status dengan !task.isSelesai()
-        // TODO Person 2C: Buat String status (gunakan ternary operator)
-        // TODO Person 2C: Print pesan dengan status
+        Task t = cariTaskById(id);
+        if (t != null) {
+            t.setSelesai(!t.isSelesai());
+            String status = t.isSelesai() ? "Selesai" : "Belum Selesai";
+            System.out.println("✓ Status task berhasil diubah menjadi: " + status);
+        } else {
+            System.out.println("✗ Task tidak ditemukan.");
+        }
     }
     
     
@@ -134,13 +145,12 @@ public class TodoListManager {
      *    - Print pesan error
      */
     public void hapusTask(int id) {
-        Task task = cariTaskById(id);
-        
-        if (task != null) {
-            taskList.remove(task);
+        Task t = cariTaskById(id);
+        if (t != null) {
+            taskList.remove(t);
             System.out.println("✓ Task berhasil dihapus!");
         } else {
-            System.out.println("✗ Task dengan ID " + id + " tidak ditemukan!");
+            System.out.println("✗ Gagal menghapus: Task tidak ditemukan.");
         }
     }
     
@@ -156,9 +166,9 @@ public class TodoListManager {
      * 4. Jika loop selesai dan tidak ada yang cocok, return null
      */
     private Task cariTaskById(int id) {
-        for (Task task : taskList) {
-            if (task.getId() == id) {
-                return task;
+        for (Task t : taskList) {
+            if (t.getId() == id) {
+                return t;
             }
         }
         return null;
