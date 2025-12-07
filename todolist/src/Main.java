@@ -1,5 +1,3 @@
-
-
 import java.util.Scanner;
 
 /**
@@ -42,21 +40,41 @@ public class Main {
      * 3. Close scanner
      */
     public static void main(String[] args) {
-        // TODO Person 3: Buat variabel boolean running
+        boolean running = true;
         
-        // TODO Person 3: Buat while loop
+        while (running) {
+            tampilkanMenu();
+            int pilihan = inputPilihan();
+            
+            switch (pilihan) {
+                case 1:
+                    menuTambahTask();
+                    break;
+                case 2:
+                    manager.lihatSemuaTask();
+                    break;
+                case 3:
+                    menuUpdateTask();
+                    break;
+                case 4:
+                    menuHapusTask();
+                    break;
+                case 5:
+                    running = false;
+                    System.out.println("\nTerima kasih telah menggunakan aplikasi TodoList!");
+                    break;
+                default:
+                    System.out.println("✗ Pilihan tidak valid!");
+                    break;
+            }
+            
+            if (running) {
+                System.out.println("\nTekan Enter untuk melanjutkan...");
+                scanner.nextLine();
+            }
+        }
         
-            // TODO Person 3: Panggil tampilkanMenu()
-            
-            // TODO Person 3: Panggil inputPilihan() dan simpan di variabel
-            
-            // TODO Person 3: Buat switch statement dengan 5 case
-            
-            
-            // TODO Person 3: Jika masih running, tunggu Enter
-        
-        
-        // TODO Person 3: Close scanner
+        scanner.close();
     }
     
     
@@ -81,7 +99,16 @@ public class Main {
      * Pilih menu (1-5):
      */
     private static void tampilkanMenu() {
-        // TODO Person 3: Print semua menu dengan format di atas
+        System.out.println("\n╔════════════════════════════════╗");
+        System.out.println("║     APLIKASI TODO LIST         ║");
+        System.out.println("╚════════════════════════════════╝");
+        System.out.println("1. Tambah Task");
+        System.out.println("2. Lihat Semua Task");
+        System.out.println("3. Update/Edit Task");
+        System.out.println("4. Hapus Task");
+        System.out.println("5. Keluar");
+        System.out.println();
+        System.out.print("Pilih menu (1-5): ");
     }
     
     /**
@@ -99,8 +126,14 @@ public class Main {
      *    - Return -1 (tanda input invalid)
      */
     private static int inputPilihan() {
-        // TODO Person 3: Implementasi dengan try-catch
-        return -1; // temporary
+        try {
+            int pilihan = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            return pilihan;
+        } catch (Exception e) {
+            scanner.nextLine(); // Clear buffer
+            return -1;
+        }
     }
     
     
@@ -122,10 +155,14 @@ public class Main {
      *    - Print "✗ Nama task tidak boleh kosong!"
      */
     private static void menuTambahTask() {
-        // TODO Person 4: Print prompt
-        // TODO Person 4: Baca input nama
-        // TODO Person 4: Validasi tidak kosong
-        // TODO Person 4: Panggil manager.tambahTask() atau print error
+        System.out.print("\nMasukkan nama task: ");
+        String nama = scanner.nextLine();
+        
+        if (!nama.trim().isEmpty()) {
+            manager.tambahTask(nama);
+        } else {
+            System.out.println("✗ Nama task tidak boleh kosong!");
+        }
     }
     
     
@@ -154,10 +191,35 @@ public class Main {
      *      a. Print "✗ Pilihan tidak valid!"
      */
     private static void menuUpdateTask() {
-        // TODO Person 5: Tampilkan daftar task
-        // TODO Person 5: Print menu pilihan aksi
-        // TODO Person 5: Input aksi dan id
-        // TODO Person 5: Buat if-else untuk handle aksi
+        System.out.println();
+        manager.lihatSemuaTask();
+        
+        System.out.println("\nPilih aksi:");
+        System.out.println("1. Edit nama task");
+        System.out.println("2. Toggle status (Selesai/Belum)");
+        System.out.print("Pilihan: ");
+        
+        try {
+            int aksi = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            System.out.print("Masukkan ID task: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            if (aksi == 1) {
+                System.out.print("Masukkan nama baru: ");
+                String namaBaru = scanner.nextLine();
+                manager.updateTask(id, namaBaru);
+            } else if (aksi == 2) {
+                manager.toggleStatusTask(id);
+            } else {
+                System.out.println("✗ Pilihan tidak valid!");
+            }
+        } catch (Exception e) {
+            scanner.nextLine(); // Clear buffer
+            System.out.println("✗ Input tidak valid!");
+        }
     }
     
     
@@ -181,10 +243,25 @@ public class Main {
      *    - Print "Penghapusan dibatalkan."
      */
     private static void menuHapusTask() {
-        // TODO Person 5: Tampilkan daftar task
-        // TODO Person 5: Input ID
-        // TODO Person 5: Minta konfirmasi
-        // TODO Person 5: Cek konfirmasi (gunakan .equalsIgnoreCase("y"))
-        // TODO Person 5: Panggil hapusTask atau print pembatalan
+        System.out.println();
+        manager.lihatSemuaTask();
+        
+        try {
+            System.out.print("\nMasukkan ID task yang akan dihapus: ");
+            int id = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+            
+            System.out.print("Yakin ingin menghapus? (y/n): ");
+            String konfirmasi = scanner.nextLine();
+            
+            if (konfirmasi.equalsIgnoreCase("y")) {
+                manager.hapusTask(id);
+            } else {
+                System.out.println("Penghapusan dibatalkan.");
+            }
+        } catch (Exception e) {
+            scanner.nextLine(); // Clear buffer
+            System.out.println("✗ Input tidak valid!");
+        }
     }
 }

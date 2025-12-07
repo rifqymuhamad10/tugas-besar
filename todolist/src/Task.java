@@ -1,4 +1,3 @@
-
 /**
  * Class untuk model Task
  * Dikerjakan oleh: Person 1
@@ -30,7 +29,9 @@ public class Task {
      * - Set this.selesai = false (default belum selesai)
      */
     public Task(int id, String nama) {
-        // TODO Person 1: Initialize semua attributes
+        this.id = id;
+        this.nama = nama;
+        this.selesai = false;
     }
     
     
@@ -43,8 +44,7 @@ public class Task {
      * @return id task
      */
     public int getId() {
-        // TODO Person 1: return id
-        return 0; // temporary
+        return id;
     }
     
     /**
@@ -52,8 +52,7 @@ public class Task {
      * @return nama task
      */
     public String getNama() {
-        // TODO Person 1: return nama
-        return null; // temporary
+        return nama;
     }
     
     /**
@@ -61,8 +60,7 @@ public class Task {
      * @return true jika selesai, false jika belum
      */
     public boolean isSelesai() {
-        // TODO Person 1: return selesai
-        return false; // temporary
+        return selesai;
     }
     
     
@@ -75,7 +73,7 @@ public class Task {
      * @param nama - Nama baru untuk task
      */
     public void setNama(String nama) {
-        // TODO Person 1: Set this.nama = nama
+        this.nama = nama;
     }
     
     /**
@@ -83,7 +81,7 @@ public class Task {
      * @param selesai - Status baru (true/false)
      */
     public void setSelesai(boolean selesai) {
-        // TODO Person 1: Set this.selesai = selesai
+        this.selesai = selesai;
     }
     
     
@@ -106,8 +104,7 @@ public class Task {
      */
     @Override
     public String toString() {
-        // TODO Person 1: Buat String status dengan ternary operator
-        // TODO Person 1: Return format yang sesuai
-        return null; // temporary
+        String status = selesai ? "[✓]" : "[ ]";
+        return status + " " + id + ". " + nama;
     }
 }
