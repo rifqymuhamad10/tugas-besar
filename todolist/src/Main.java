@@ -85,22 +85,11 @@ public class Main {
     
     /**
      * Method untuk menampilkan menu utama
-     * 
-     * Tampilan:
-     * ╔════════════════════════════════╗
-     * ║     APLIKASI TODO LIST         ║
-     * ╚════════════════════════════════╝
-     * 1. Tambah Task
-     * 2. Lihat Semua Task
-     * 3. Update/Edit Task
-     * 4. Hapus Task
-     * 5. Keluar
-     * 
      * Pilih menu (1-5):
      */
     private static void tampilkanMenu() {
         System.out.println("\n╔════════════════════════════════╗");
-        System.out.println("║     APLIKASI TODO LIST         ║");
+        System.out.println("║     APLIKASI TO DO LIST         ║");
         System.out.println("╚════════════════════════════════╝");
         System.out.println("1. Tambah Task");
         System.out.println("2. Lihat Semua Task");
@@ -173,52 +162,41 @@ public class Main {
     
     /**
      * Method untuk menu update task
-     * 
-     * Algoritma:
-     * 1. Tampilkan daftar task (panggil manager.lihatSemuaTask())
-     * 2. Print pilihan aksi:
-     *    - 1. Edit nama task
-     *    - 2. Toggle status (Selesai/Belum)
-     * 3. Input pilihan aksi
-     * 4. Input ID task
-     * 5. Switch berdasarkan aksi:
-     *    - Jika aksi == 1:
-     *      a. Input nama baru
-     *      b. Panggil manager.updateTask(id, namaBaru)
-     *    - Jika aksi == 2:
-     *      a. Panggil manager.toggleStatusTask(id)
-     *    - Else:
-     *      a. Print "✗ Pilihan tidak valid!"
      */
     private static void menuUpdateTask() {
-        System.out.println();
+        System.out.println("\n--- UPDATE / EDIT TASK ---");
         manager.lihatSemuaTask();
         
+        System.out.print("\nMasukkan ID task yang akan diedit (0 untuk batal): ");
+        int id = inputPilihan(); // Pakai method aman ini
+
+        if (id == 0) {
+            System.out.println("Update dibatalkan.");
+            return;
+        } else if (id < 0) {
+            System.out.println("✗ ID tidak valid!");
+            return;
+        }
+
         System.out.println("\nPilih aksi:");
         System.out.println("1. Edit nama task");
         System.out.println("2. Toggle status (Selesai/Belum)");
         System.out.print("Pilihan: ");
         
-        try {
-            int aksi = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            
-            System.out.print("Masukkan ID task: ");
-            int id = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            
-            if (aksi == 1) {
-                System.out.print("Masukkan nama baru: ");
-                String namaBaru = scanner.nextLine();
+        int aksi = inputPilihan();
+
+        if (aksi == 1) {
+            System.out.print("Masukkan nama baru: ");
+            String namaBaru = scanner.nextLine();
+            if (!namaBaru.trim().isEmpty()) {
                 manager.updateTask(id, namaBaru);
-            } else if (aksi == 2) {
-                manager.toggleStatusTask(id);
             } else {
-                System.out.println("✗ Pilihan tidak valid!");
+                System.out.println("✗ Nama tidak boleh kosong!");
             }
-        } catch (Exception e) {
-            scanner.nextLine(); // Clear buffer
-            System.out.println("✗ Input tidak valid!");
+        } else if (aksi == 2) {
+            manager.toggleStatusTask(id);
+        } else {
+            System.out.println("✗ Pilihan aksi tidak valid!");
         }
     }
     
@@ -230,38 +208,30 @@ public class Main {
     
     /**
      * Method untuk menu hapus task
-     * 
-     * Algoritma:
-     * 1. Tampilkan daftar task (panggil manager.lihatSemuaTask())
-     * 2. Print "Masukkan ID task yang akan dihapus: "
-     * 3. Input ID task
-     * 4. Print "Yakin ingin menghapus? (y/n): "
-     * 5. Input konfirmasi
-     * 6. Jika konfirmasi == "y" (case insensitive):
-     *    - Panggil manager.hapusTask(id)
-     * 7. Else:
-     *    - Print "Penghapusan dibatalkan."
      */
     private static void menuHapusTask() {
-        System.out.println();
+        System.out.println("\n--- HAPUS TASK ---");
         manager.lihatSemuaTask();
         
-        try {
-            System.out.print("\nMasukkan ID task yang akan dihapus: ");
-            int id = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
-            
-            System.out.print("Yakin ingin menghapus? (y/n): ");
-            String konfirmasi = scanner.nextLine();
-            
-            if (konfirmasi.equalsIgnoreCase("y")) {
-                manager.hapusTask(id);
-            } else {
-                System.out.println("Penghapusan dibatalkan.");
-            }
-        } catch (Exception e) {
-            scanner.nextLine(); // Clear buffer
-            System.out.println("✗ Input tidak valid!");
+        System.out.print("\nMasukkan ID task yang akan dihapus (0 untuk batal): ");
+        int id = inputPilihan();
+
+        if (id == 0) {
+            System.out.println("Penghapusan dibatalkan.");
+            return;
+        } else if (id < 0) {
+            System.out.println("✗ ID tidak valid!");
+            return;
+        }
+        
+        // Konfirmasi keamanan
+        System.out.print("Apakah Anda yakin ingin menghapus task ID " + id + "? (y/n): ");
+        String konfirmasi = scanner.nextLine();
+        
+        if (konfirmasi.equalsIgnoreCase("y")) {
+            manager.hapusTask(id);
+        } else {
+            System.out.println("Penghapusan dibatalkan.");
         }
     }
 }
